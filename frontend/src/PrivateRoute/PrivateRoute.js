@@ -1,12 +1,7 @@
-import {Route, Navigate} from "react-router-dom";
+import {Route, Navigate, useLocation} from "react-router-dom";
 
 function PrivateRoute(props) {
-    return <Route {...props}>
-        {
-            !props.token ? <Navigate to="/auth/"/> :
-                <>
-                    {props.children}
-                </>
-        }
-    </Route>
+    let location = useLocation();
+    return <Route path={props.path} element={!props.token ? <Navigate to="/auth/" state={{ from: location }} replace/> : props.element}/>
 }
+export default PrivateRoute
